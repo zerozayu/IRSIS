@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!--定义应用程序的数据库名称。默认情况下，每个数据库名都应该以.db结尾。
+    	如果你没有将你的数据库命名为.db，LitePal会自动为你加上后缀。-->
+    <dbname value="irsis.db" />
+
+    <!--定义数据库的版本。每次您想要升级数据库时，version标记都会有所帮助。
+    	修改您在mapping标签中定义的模型，使版本值为+ 1，就可以自动处理数据库的升级。-->
+    <version value="1" />
+
+    <!--使用映射标签在列表中定义模型，LitePal将为每个映射类创建表。模型中定义的受支持的字段将被映射到列中。-->
+    <list>
+        <mapping class="com.example.irsis.myclass.Problem"/>
+        <mapping class="com.example.irsis.myclass.Msg"/>
+        <mapping class="com.example.irsis.myclass.User"/>
+    </list>
+
+    <!--定义.db文件的位置。“内部”是指。db文件将被存储在没有人可以访问的内部存储的数据库文件夹中。
+        “外部”意味着.db文件将存储在主外部存储设备上的目录路径中，应用程序可以将其拥有的所有人都可以访问的持久文件放在这个目录中。
+        “internal”将作为默认值。-->
+
+</litepal>

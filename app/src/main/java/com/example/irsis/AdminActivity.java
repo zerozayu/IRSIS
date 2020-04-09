@@ -12,7 +12,7 @@ import android.widget.Button;
 import com.example.irsis.Fragment.RightFragment;
 import com.example.irsis.Fragment.RightFragment1;
 
-public class AdminActivity extends AppCompatActivity implements View.OnClickListener {
+public class AdminActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

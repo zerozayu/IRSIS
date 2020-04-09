@@ -8,10 +8,11 @@ import android.os.Bundle;
 
 import com.example.irsis.Fragment.ProblemContentFragment;
 
-public class ProblemContentActivity extends AppCompatActivity {
+public class ProblemContentActivity extends BaseActivity {
     //自定义方法传参
-    public static void actionStart(Context context, String problemName, String problemContent){
+    public static void actionStart(Context context, int problemImageId,String problemName, String problemContent ){
         Intent intent =new Intent(context, ProblemContentActivity.class);
+        intent.putExtra("problem_imageId",problemImageId);
         intent.putExtra("problem_name",problemName);
         intent.putExtra("problem_content",problemContent);
         context.startActivity(intent);
@@ -22,6 +23,8 @@ public class ProblemContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_content);
 
+        //获取传入的问题图片
+        int problemImageId =getIntent().getIntExtra("problem_imageId",0);
         //获取传入的问题名称
         String problemName =getIntent().getStringExtra("problem_name");
         //获取传入的问题内容
@@ -31,6 +34,6 @@ public class ProblemContentActivity extends AppCompatActivity {
         ProblemContentFragment problemContentFragment = (ProblemContentFragment)
                 getSupportFragmentManager().findFragmentById(R.id.problem_content_fragment);
         //刷新ProblemDetailsFragment界面
-        problemContentFragment.refresh(problemName,problemContent);
+        problemContentFragment.refresh(problemImageId,problemName,problemContent);
     }
 }

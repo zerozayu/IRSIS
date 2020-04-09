@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LitePalActivity">
+
+    <Button
+        android:id="@+id/button_createDatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="创建数据库跟表" />
+
+    <Button
+        android:id="@+id/button_addData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加" />
+
+    <Button
+        android:id="@+id/button_updateData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="更新" />
+
+    <Button
+        android:id="@+id/button_deleteData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删除" />
+
+    <Button
+        android:id="@+id/button_queryData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询" />
+
+    <TextView
+        android:id="@+id/textView_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="jieguo"/>
+
+
+</LinearLayout>

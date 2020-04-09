@@ -1,27 +1,34 @@
 package com.example.irsis.myclass;
 
-public class Problem {
-    private String name;
+import org.litepal.crud.LitePalSupport;
+
+public class Problem extends LitePalSupport {
+
+    private int pId;
     private int imageId;
+    private String name;
     private String content;
 
     public Problem() {
     }
-
-    public Problem(String name, int imageId, String content) {
-        this.name = name;
+    public Problem(int pId, int imageId, String name, String content) {
+        this.pId = pId;
         this.imageId = imageId;
+        this.name = name;
         this.content = content;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public int getpId() {
+        return pId;
+    }
+
+    public void setpId(int pId) {
+        this.pId = pId;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -29,12 +36,14 @@ public class Problem {
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
 
     public int getImageId() {
         return imageId;
+    }
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 }

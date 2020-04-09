@@ -12,30 +12,68 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/button_toSubmitProblemActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提交问题"
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/button_toProblemActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:text="问题列表"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/button_toChatActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:text="聊天界面"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/button_toAdminActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:text="管理员界面"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_toFilePresistenceActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="文件持久化"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_offine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="下线"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_toLitePalActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LitePal数据库"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_toRuntimePermissionActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="to打电话"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_toNotificationActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="to发送通知"
+            android:textSize="24sp" />
 
     </LinearLayout>
 

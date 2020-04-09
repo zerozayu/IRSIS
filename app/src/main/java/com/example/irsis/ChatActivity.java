@@ -15,7 +15,7 @@ import com.example.irsis.myclass.Msg;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
     private List<Msg> msgList =new ArrayList<>();
     private EditText inputText;
     protected Button send;
@@ -37,7 +37,7 @@ public class ChatActivity extends AppCompatActivity {
 
         initMsgs();//初始化消息数据
         inputText=findViewById(R.id.input_text);
-        send=findViewById(R.id.button_send);
+        send=findViewById(R.id.button_sendMessage);
         msgRecyclerView=findViewById(R.id.msg_recycler_view);
         LinearLayoutManager layoutManager =new LinearLayoutManager(this);
         msgRecyclerView.setLayoutManager(layoutManager);

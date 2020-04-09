@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ThirdActivity">
+    tools:context=".RuntimePermissionActivity">
 
     <Button
+        android:id="@+id/button_makeCall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_3"
-        android:text="button3"
+        android:text="打电话"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
