@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.irsis">
+
     <!-- 声明权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -49,6 +51,17 @@
             </intent-filter>
         </activity> <!-- 主活动 -->
         <activity android:name=".MainActivity" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.irsis.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
