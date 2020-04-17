@@ -53,7 +53,6 @@ public class FilePersistenceActivity extends BaseActivity implements View.OnClic
                 String inputText = edit.getText().toString();
                 sava(inputText);
                 Toast.makeText(this, "保存成功，下次打开可以继续编辑。", Toast.LENGTH_SHORT).show();
-
                 break;
             default:
                 break;

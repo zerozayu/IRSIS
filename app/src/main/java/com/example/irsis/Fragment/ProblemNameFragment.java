@@ -1,6 +1,8 @@
 package com.example.irsis.Fragment;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +76,8 @@ public class ProblemNameFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
             //获取problem_item
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.problem_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.problem_item, parent,
+                    false);
             final ViewHolder holder = new ViewHolder(view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,10 +87,12 @@ public class ProblemNameFragment extends Fragment {
                         //如果是双页模式，则刷新ProblemContentFragment中的内容
                         ProblemContentFragment problemContentFragment = (ProblemContentFragment) getFragmentManager()
                                 .findFragmentById(R.id.problem_content_fragment);
-                        problemContentFragment.refresh(problem.getImageId(), problem.getName(), problem.getContent());
+                        problemContentFragment.refresh(problem.getImageId(), problem.getName(),
+                                problem.getContent(),problem.getIamge());
                     } else {
                         //如果是单页模式，直接启动ProblemContentActivity
-                        ProblemContentActivity.actionStart(getActivity(), problem.getImageId(), problem.getName(), problem.getContent());
+                        ProblemContentActivity.actionStart(getActivity(), problem.getImageId(),
+                                problem.getName(), problem.getContent(),problem.getIamge());
                     }
                 }
             });

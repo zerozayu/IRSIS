@@ -61,6 +61,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //跳转向聊天界面
         Button button_toChatActivity = findViewById(R.id.button_toChatActivity);
         button_toChatActivity.setOnClickListener(this);
+        //跳转向地图界面
+        Button button_toLBSActivity = findViewById(R.id.button_toLBSActivity);
+        button_toLBSActivity.setOnClickListener(this);
         //跳转向管理员界面
         Button button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
         button_toAdminActivity.setOnClickListener(this);
@@ -80,6 +83,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //跳转至拨打电话
         Button button_toNotificationActivity=findViewById(R.id.button_toNotificationActivity);
         button_toNotificationActivity.setOnClickListener(this);
+        //跳转至网路
+        Button button_toNetWorkTestActivity=findViewById(R.id.button_toNetWorkTestActivity);
+        button_toNetWorkTestActivity.setOnClickListener(this);
 
     }
 
@@ -114,7 +120,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.button_toChatActivity:
                 intent = new Intent(MainActivity.this, ChatActivity.class);
                 startActivity(intent);
-
+                break;
+            case R.id.button_toLBSActivity:
+                intent = new Intent(MainActivity.this, LBSActivity.class);
+                startActivity(intent);
                 break;
             case R.id.button_toAdminActivity:
                 intent = new Intent(MainActivity.this, AdminActivity.class);
@@ -142,6 +151,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 intent=new Intent(MainActivity.this,NotificationActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.button_toNetWorkTestActivity:
+                intent=new Intent(MainActivity.this,NetWorkTestActivity.class);
+                startActivity(intent);
+                break;
+
+
             default:
                 break;
 

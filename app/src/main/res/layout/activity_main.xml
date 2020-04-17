@@ -32,6 +32,12 @@
             android:layout_height="wrap_content"
             android:text="聊天界面"
             android:textSize="24sp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_toLBSActivity"
+            android:text="开始巡检"
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/button_toAdminActivity"
@@ -73,6 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="to发送通知"
+            android:textSize="24sp" />
+        <Button
+            android:id="@+id/button_toNetWorkTestActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="to网络"
             android:textSize="24sp" />
 
     </LinearLayout>

@@ -6,6 +6,9 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,6 +75,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="登录" />
+    <LinearLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/loading" />
+    </LinearLayout>
 
 
 </LinearLayout>

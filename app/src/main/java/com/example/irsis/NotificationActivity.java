@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.example.irsis.myclass.Problem;
 
-public class NotificationActivity extends AppCompatActivity implements View.OnClickListener {
+public class NotificationActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

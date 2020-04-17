@@ -2,6 +2,7 @@ package com.example.irsis;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +15,10 @@ import com.example.irsis.myclass.User;
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class LitePalActivity extends AppCompatActivity implements View.OnClickListener {
+public class LitePalActivity extends BaseActivity implements View.OnClickListener {
 
     TextView textView=null;
 
@@ -49,7 +51,7 @@ public class LitePalActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.button_addData:
                 User user = new User();
-                user.setuId(1);
+//                user.setuId(1);
                 user.setUserAccount("gaishun@qq.com");
                 user.setUserPassword("gaishun");
                 user.setUserName("盖顺");
@@ -93,4 +95,5 @@ public class LitePalActivity extends AppCompatActivity implements View.OnClickLi
 
         }
     }
+
 }

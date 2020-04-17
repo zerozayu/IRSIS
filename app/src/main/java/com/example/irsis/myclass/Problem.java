@@ -8,6 +8,17 @@ public class Problem extends LitePalSupport {
     private int imageId;
     private String name;
     private String content;
+    private byte[] iamge;
+
+    public byte[] getIamge() {
+        return iamge;
+    }
+
+    public void setIamge(byte[] iamge) {
+        this.iamge = iamge;
+    }
+
+
 
     public Problem() {
     }
