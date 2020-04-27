@@ -7,17 +7,14 @@
     tools:context=".MainActivity"
     tools:ignore="MissingConstraints">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_toSubmitProblemActivity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="提交问题"
-            android:textSize="24sp" />
+
 
         <Button
             android:id="@+id/button_toProblemActivity"
@@ -46,12 +43,7 @@
             android:text="管理员界面"
             android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/button_toFilePresistenceActivity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="文件持久化"
-            android:textSize="24sp" />
+
 
         <Button
             android:id="@+id/button_offine"
@@ -64,7 +56,7 @@
             android:id="@+id/button_toLitePalActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LitePal数据库"
+            android:text="数据库操作"
             android:textSize="24sp" />
 
         <Button

@@ -47,6 +47,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
 
 
+
         pref = PreferenceManager.getDefaultSharedPreferences(this);
 
         accountEdit = findViewById(R.id.account);
@@ -118,6 +119,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
+                            isRight=false;
                         }
                         else {
                             Toast.makeText(LoginActivity.this, "用户名或密码错误！", Toast.LENGTH_SHORT).show();

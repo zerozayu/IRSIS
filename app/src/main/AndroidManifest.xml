@@ -28,26 +28,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="4XYqqGcPdnPE6CMv4mmwdaw686S3KkcE"/>
 
-        <activity android:name=".LBSActivity"></activity>
-        <activity android:name=".NetWorkTestActivity" />
-        <activity android:name=".NotificationActivity" />
+        <activity android:name=".LBSActivity"
+            android:label="开始巡检"/>
         <activity android:name=".SubmitProblemActivity" />
         <activity android:name=".LitePalActivity" />
-        <activity android:name=".FilePersistenceActivity" />
-        <activity android:name=".ProblemContentActivity" />
-        <activity android:name=".AdminActivity" />
-        <activity android:name=".ChatActivity" /> <!-- 启动页面 -->
+        <activity android:name=".ProblemContentActivity"
+            android:label="问题详情"/>
+        <activity android:name=".AdminActivity"
+            android:label="管理员界面"/>
+        <activity android:name=".ChatActivity"
+            android:label="聊天界面"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 第三个活动，设置为能够响应打开网页的Intent,可以响应所有的http协议 -->
+        </activity>
         <activity android:name=".RuntimePermissionActivity">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
@@ -56,8 +58,11 @@
 
                 <data android:scheme="http" />
             </intent-filter>
-        </activity> <!-- 第二个活动 -->
-        <activity android:name=".ProblemActivity">
+        </activity>
+        <activity
+            android:name=".ProblemActivity"
+            android:label="问题列表">
+
             <intent-filter>
 
                 <!-- 指明当前活动可以响应com.example.activitytest.ACTION_START这个action -->
@@ -68,7 +73,8 @@
                 <category android:name="com.example.activitytest.MY_CATEGORY" />
             </intent-filter>
         </activity> <!-- 主活动 -->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:label="校园安全巡检系统"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -51,9 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //跳转向问题列表界面
-        Button button_toSubmitProblemActivity = findViewById(R.id.button_toSubmitProblemActivity);
-        button_toSubmitProblemActivity.setOnClickListener(this);
+
 
         //跳转向问题列表界面
         Button button_toProblemActivity = findViewById(R.id.button_toProblemActivity);
@@ -67,9 +65,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //跳转向管理员界面
         Button button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
         button_toAdminActivity.setOnClickListener(this);
-        //跳转向文件持久化
-        Button button_toFilePersistenceActivity = findViewById(R.id.button_toFilePresistenceActivity);
-        button_toFilePersistenceActivity.setOnClickListener(this);
         //强制下线
         Button button_ForceOffline = findViewById(R.id.button_offine);
         button_ForceOffline.setOnClickListener(this);
@@ -80,12 +75,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //跳转至拨打电话
         Button button_toRuntimePermissionActivity=findViewById(R.id.button_toRuntimePermissionActivity);
         button_toRuntimePermissionActivity.setOnClickListener(this);
-        //跳转至拨打电话
-        Button button_toNotificationActivity=findViewById(R.id.button_toNotificationActivity);
-        button_toNotificationActivity.setOnClickListener(this);
-        //跳转至网路
-        Button button_toNetWorkTestActivity=findViewById(R.id.button_toNetWorkTestActivity);
-        button_toNetWorkTestActivity.setOnClickListener(this);
+
+
 
     }
 
@@ -94,10 +85,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.button_toSubmitProblemActivity:
-                intent = new Intent(MainActivity.this, SubmitProblemActivity.class);
-                startActivity(intent);
-                break;
             case R.id.button_toProblemActivity:
                 intent = new Intent(MainActivity.this, ProblemActivity.class);
                 PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
@@ -129,10 +116,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 intent = new Intent(MainActivity.this, AdminActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.button_toFilePresistenceActivity:
-                intent = new Intent(MainActivity.this, FilePersistenceActivity.class);
-                startActivity(intent);
-                break;
+
             //强制下线
             case R.id.button_offine:
                 intent = new Intent("com.example.IRSIS.FORCE_OFFLINE");
@@ -147,47 +131,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 intent=new Intent(MainActivity.this,RuntimePermissionActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.button_toNotificationActivity:
-                intent=new Intent(MainActivity.this,NotificationActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.button_toNetWorkTestActivity:
-                intent=new Intent(MainActivity.this,NetWorkTestActivity.class);
-                startActivity(intent);
-                break;
-
 
             default:
                 break;
-
-//                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-//                dialog.setTitle("这是一个弹出式对话框");
-//                dialog.setMessage("这是重要的信息。");
-//                dialog.setCancelable(false);
-//                dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                });
-//                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                });
-//                dialog.show();
-
-//                int progress =progressBar.getProgress();
-//                progress+=10;
-//                progressBar.setProgress(progress);
-
-//                imageView.setImageResource(R.drawable.img_2);
-
-//                String inputText =editText.getText().toString();
-//                Toast.makeText(MainActivity.this,inputText,Toast.LENGTH_SHORT).show();
-
         }
     }
 

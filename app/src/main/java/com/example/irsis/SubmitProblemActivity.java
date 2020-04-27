@@ -45,8 +45,8 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
     public static final int TAKE_PHOTO = 2;
     private Uri imageUri;
 
-    private EditText edit_problemName;
-    private EditText edit_problemContent;
+    private EditText edit_problemName=null;
+    private EditText edit_problemContent=null;
     private ImageView picture_problem;
 
     byte[] images=null;
@@ -120,20 +120,35 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                 problem.setImageId(R.drawable.problem128);
                 problem.save();
 
-                //弹出对话框
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("通知");
-                builder.setMessage("提交成功");
-                builder.setCancelable(false);
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        onBackPressed();
-                        edit_problemName.setText("");
-                        edit_problemContent.setText("");
-                    }
-                });
-                builder.show();
+                if (images==null){
+                    //弹出对话框
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("通知");
+                    builder.setMessage("必须有照片！");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    builder.show();
+                }else {
+                    //弹出对话框
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("通知");
+                    builder.setMessage("提交成功");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            onBackPressed();
+                            edit_problemName.setText("");
+                            edit_problemContent.setText("");
+                        }
+                    });
+                    builder.show();
+                }
+
                 break;
 
 

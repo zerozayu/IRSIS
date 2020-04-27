@@ -13,6 +13,32 @@
         android:layout_height="wrap_content"
         android:text="创建数据库跟表" />
 
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="请输入id"-->
+<!--        android:id="@+id/litepal_id"/>-->
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="请输入名字"-->
+<!--        android:id="@+id/litepal_name"/>-->
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="请输入账户名"-->
+<!--        android:id="@+id/litepal_account"/>-->
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="请输入密码"-->
+<!--        android:id="@+id/litepal_password"/>-->
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="请输入权限"-->
+<!--        android:id="@+id/litepal_limit"/>-->
+
     <Button
         android:id="@+id/button_addData"
         android:layout_width="match_parent"

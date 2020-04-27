@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class LitePalActivity extends BaseActivity implements View.OnClickListener {
 
     TextView textView=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,10 @@ public class LitePalActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.button_addData:
                 User user = new User();
-//                user.setuId(1);
-                user.setUserAccount("gaishun@qq.com");
-                user.setUserPassword("gaishun");
-                user.setUserName("盖顺");
+                user.setuId(1);
+                user.setUserAccount("zhangyu@qq.com");
+                user.setUserPassword("123456");
+                user.setUserName("zhangyu");
                 user.setLimit(true);
                 user.save();
 
@@ -72,7 +74,7 @@ public class LitePalActivity extends BaseActivity implements View.OnClickListene
                 problem1.updateAll("name=? and content=?","问题一名字","问题一内容");
                 break;
             case R.id.button_deleteData:
-                LitePal.deleteAll(Problem.class,"pId =?","1");
+                LitePal.deleteAll(User.class,"uId =?","1");
                 break;
             case R.id.button_queryData:
 //                List<Problem> problemList =LitePal.findAll(Problem.class);
