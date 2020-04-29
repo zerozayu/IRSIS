@@ -1,22 +1,22 @@
-package com.example.irsis;
+package com.example.irsis.Activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class RuntimePermissionActivity extends BaseActivity {
+import com.example.irsis.R;
+
+public class MakeCallActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,9 @@ public class RuntimePermissionActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 //判断用户是否已经给过授权。两个参数（context，权限名）
-                if (ContextCompat.checkSelfPermission(RuntimePermissionActivity.this,
+                if (ContextCompat.checkSelfPermission(MakeCallActivity.this,
                         Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(RuntimePermissionActivity.this,
+                    ActivityCompat.requestPermissions(MakeCallActivity.this,
                             new String[]{Manifest.permission.CALL_PHONE}, 1);
                 } else {
                     call();

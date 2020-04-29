@@ -36,10 +36,9 @@ public class ProblemContentFragment extends Fragment {
     }
 
     //refresh方法
-    public void refresh(int problemImage, final String problemName, String problemContent, byte[] image) {
+    public void refresh(final String problemName, String problemContent, byte[] image) {
         View problemContentLayout = view.findViewById(R.id.visibility_layout);
         problemContentLayout.setVisibility(View.VISIBLE);
-        final ImageView problemImageId = view.findViewById(R.id.problem_image);
         TextView problemNameText = view.findViewById(R.id.problem_name);
         TextView problemContentText = view.findViewById(R.id.problem_content);
         ImageView problemShowImage = view.findViewById(R.id.pictureShow_problem);
@@ -52,7 +51,6 @@ public class ProblemContentFragment extends Fragment {
 //                LitePal.deleteAll(Problem.class,"name=?",problemName);
 //            }
 //        });
-        problemImageId.setImageResource(problemImage);//刷新问题的图片
         problemNameText.setText(problemName);//刷新问题详情的名字
         problemContentText.setText(problemContent);//刷新问题详情的内容
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);//将获取到的二进制图片转成bitmap型

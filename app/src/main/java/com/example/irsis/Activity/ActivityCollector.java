@@ -1,4 +1,4 @@
-package com.example.irsis;
+package com.example.irsis.Activity;
 
 import android.app.Activity;
 import android.hardware.camera2.CameraManager;

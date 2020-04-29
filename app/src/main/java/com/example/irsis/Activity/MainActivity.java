@@ -1,9 +1,12 @@
-package com.example.irsis;
+package com.example.irsis.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,11 +22,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.irsis.R;
 import com.example.irsis.myclass.User;
+import com.google.android.material.navigation.NavigationView;
 
 import org.litepal.LitePal;
 
 import java.util.List;
+import java.util.Objects;
 
 /*
  * 1.活动的启动模式：standard、singleTop、singleTask、singleInstance
@@ -43,6 +49,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private EditText editText;
     private ImageView imageView;
     private ProgressBar progressBar;
+    private DrawerLayout mDrawerLayout;
 
 
     //重写onCreate方法
@@ -51,6 +58,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navView = findViewById(R.id.nav_view);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
+        //将打电话设为默认选中
+
+        navView.setCheckedItem(R.id.nav_call);
+
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()){
+                    case R.id.nav_call:
+                        intent =new Intent(MainActivity.this,MakeCallActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_offline:
+                        intent =new Intent("com.example.IRSIS.FORCE_OFFLINE");
+                        sendBroadcast(intent);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
 
         //跳转向问题列表界面
@@ -65,20 +104,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //跳转向管理员界面
         Button button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
         button_toAdminActivity.setOnClickListener(this);
-        //强制下线
-        Button button_ForceOffline = findViewById(R.id.button_offine);
-        button_ForceOffline.setOnClickListener(this);
+
         //跳转至数据库
-        Button button_toLitePalActivity=findViewById(R.id.button_toLitePalActivity);
+        Button button_toLitePalActivity = findViewById(R.id.button_toLitePalActivity);
         button_toLitePalActivity.setOnClickListener(this);
-
-        //跳转至拨打电话
-        Button button_toRuntimePermissionActivity=findViewById(R.id.button_toRuntimePermissionActivity);
-        button_toRuntimePermissionActivity.setOnClickListener(this);
-
 
 
     }
+
 
     //重写onClick方法
     @Override
@@ -87,20 +120,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.button_toProblemActivity:
                 intent = new Intent(MainActivity.this, ProblemActivity.class);
-                PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
-                List<User> userList=LitePal.findAll(User.class);
-                int len=userList.size();
-                NotificationManager manager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                Notification notification =new NotificationCompat.Builder(this,"default")
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+                List<User> userList = LitePal.findAll(User.class);
+                int len = userList.size();
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                Notification notification = new NotificationCompat.Builder(this, "default")
                         .setContentTitle("通知")
                         .setContentText("内容")
                         .setWhen(System.currentTimeMillis())
                         .setSmallIcon(R.mipmap.irsis)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.irsis))
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.irsis))
                         .setContentIntent(pendingIntent)
                         .setAutoCancel(true)
                         .build();
-                manager.notify(1,notification);
+                manager.notify(1, notification);
 
                 startActivity(intent);
                 break;
@@ -117,20 +150,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
 
-            //强制下线
-            case R.id.button_offine:
-                intent = new Intent("com.example.IRSIS.FORCE_OFFLINE");
-                sendBroadcast(intent);
+            case R.id.button_toLitePalActivity:
+                intent = new Intent(MainActivity.this, LitePalActivity.class);
+                startActivity(intent);
                 break;
 
-            case R.id.button_toLitePalActivity:
-                intent=new Intent(MainActivity.this,LitePalActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.button_toRuntimePermissionActivity:
-                intent=new Intent(MainActivity.this,RuntimePermissionActivity.class);
-                startActivity(intent);
-                break;
 
             default:
                 break;
@@ -140,7 +164,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //重写menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.toolbar_main, menu);
         return true;
     }
 
@@ -152,6 +176,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.remove_item:
                 Toast.makeText(this, "你点击了remove", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.setting_main:
+                Toast.makeText(this, "你点击了setting", Toast.LENGTH_SHORT).show();
+                break;
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             default:
         }

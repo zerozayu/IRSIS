@@ -1,8 +1,7 @@
-package com.example.irsis;
+package com.example.irsis.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
@@ -11,22 +10,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.irsis.Fragment.ProblemNameFragment;
+import com.example.irsis.R;
 import com.example.irsis.myclass.Problem;
-import com.example.irsis.myclass.User;
 
 import org.litepal.LitePal;
 
@@ -113,11 +109,9 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
             case R.id.button_submitProblem:
                 //数据库存储操作
                 Problem problem = new Problem();
-
                 problem.setIamge(images);
                 problem.setName(edit_problemName.getText().toString());
                 problem.setContent(edit_problemContent.getText().toString());
-                problem.setImageId(R.drawable.problem128);
                 problem.save();
 
                 if (images==null){
@@ -144,6 +138,7 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                             onBackPressed();
                             edit_problemName.setText("");
                             edit_problemContent.setText("");
+                            finish();
                         }
                     });
                     builder.show();

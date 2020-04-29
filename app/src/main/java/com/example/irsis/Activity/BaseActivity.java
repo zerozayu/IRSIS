@@ -1,6 +1,5 @@
-package com.example.irsis;
+package com.example.irsis.Activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -55,8 +54,8 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         public void onReceive(final Context context, Intent intent) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("警告");
-            builder.setMessage("你已经被强制下线，请重新登录。");
+            builder.setTitle("通知");
+            builder.setMessage("你已经退出登录，请重新登录。");
             builder.setCancelable(false);
             builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
@@ -64,6 +63,7 @@ public class BaseActivity extends AppCompatActivity {
                     ActivityCollector.finishAll();
                     Intent intent1 = new Intent(context, LoginActivity.class);
                     context.startActivity(intent1);
+                    finish();
                 }
             });
             builder.show();

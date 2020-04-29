@@ -1,22 +1,18 @@
-package com.example.irsis;
+package com.example.irsis.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.irsis.Activity.BaseActivity;
+import com.example.irsis.R;
 import com.example.irsis.myclass.Problem;
 import com.example.irsis.myclass.User;
 
 import org.litepal.LitePal;
-import org.litepal.crud.LitePalSupport;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class LitePalActivity extends BaseActivity implements View.OnClickListener {
@@ -74,7 +70,7 @@ public class LitePalActivity extends BaseActivity implements View.OnClickListene
                 problem1.updateAll("name=? and content=?","问题一名字","问题一内容");
                 break;
             case R.id.button_deleteData:
-                LitePal.deleteAll(User.class,"uId =?","1");
+                LitePal.deleteAll(Problem.class, "Pname = ? and Pcontent = ?", "1");
                 break;
             case R.id.button_queryData:
 //                List<Problem> problemList =LitePal.findAll(Problem.class);

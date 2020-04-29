@@ -1,31 +1,24 @@
 package com.example.irsis.Fragment;
 
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.irsis.ProblemActivity;
-import com.example.irsis.ProblemContentActivity;
+import com.example.irsis.Activity.ProblemContentActivity;
 import com.example.irsis.R;
 import com.example.irsis.myclass.Problem;
 
 import org.litepal.LitePal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProblemNameFragment extends Fragment {
@@ -33,6 +26,7 @@ public class ProblemNameFragment extends Fragment {
     //ProblemActivity problemActivity = (ProblemActivity) getActivity();
 
     private boolean isTwoPane;
+
     private List<Problem> getProblem() {
         List<Problem> problemList = LitePal.findAll(Problem.class);
         return problemList;
@@ -87,11 +81,11 @@ public class ProblemNameFragment extends Fragment {
                         //如果是双页模式，则刷新ProblemContentFragment中的内容
                         ProblemContentFragment problemContentFragment = (ProblemContentFragment) getFragmentManager()
                                 .findFragmentById(R.id.problem_content_fragment);
-                        problemContentFragment.refresh(problem.getImageId(), problem.getName(),
+                        problemContentFragment.refresh( problem.getName(),
                                 problem.getContent(),problem.getIamge());
                     } else {
                         //如果是单页模式，直接启动ProblemContentActivity
-                        ProblemContentActivity.actionStart(getActivity(), problem.getImageId(),
+                        ProblemContentActivity.actionStart(getActivity(),
                                 problem.getName(), problem.getContent(),problem.getIamge());
                     }
                 }
@@ -104,7 +98,6 @@ public class ProblemNameFragment extends Fragment {
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
             Problem problem = mProblemList.get(position);
             holder.problemNameText.setText(problem.getName());
-            holder.problemImage.setImageResource(problem.getImageId());
         }
 
 

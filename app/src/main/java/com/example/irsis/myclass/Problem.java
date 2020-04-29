@@ -4,57 +4,49 @@ import org.litepal.crud.LitePalSupport;
 
 public class Problem extends LitePalSupport {
 
-    private int pId;
-    private int imageId;
-    private String name;
-    private String content;
-    private byte[] iamge;
+    private int Pid;
+    private String Pname;
+    private String Pcontent;
+    private byte[] Pimage;
 
     public byte[] getIamge() {
-        return iamge;
+        return Pimage;
     }
 
-    public void setIamge(byte[] iamge) {
-        this.iamge = iamge;
+    public void setIamge(byte[] image) {
+        this.Pimage = image;
     }
 
 
 
     public Problem() {
     }
-    public Problem(int pId, int imageId, String name, String content) {
-        this.pId = pId;
-        this.imageId = imageId;
-        this.name = name;
-        this.content = content;
+    public Problem(int id, String name, String content) {
+        this.Pid = id;
+        this.Pname = name;
+        this.Pcontent = content;
     }
 
     public int getpId() {
-        return pId;
+        return Pid;
     }
 
     public void setpId(int pId) {
-        this.pId = pId;
+        this.Pid = pId;
     }
 
     public String getName() {
-        return name;
+        return Pname;
     }
     public void setName(String name) {
-        this.name = name;
+        this.Pname = name;
     }
 
     public String getContent() {
-        return content;
+        return Pcontent;
     }
     public void setContent(String content) {
-        this.content = content;
+        this.Pcontent = content;
     }
 
-    public int getImageId() {
-        return imageId;
-    }
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
 }

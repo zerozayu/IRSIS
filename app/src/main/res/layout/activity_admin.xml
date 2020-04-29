@@ -4,11 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <fragment
-        android:id="@+id/left_fragment"
-        android:name="com.example.irsis.Fragment.LeftFragment"
+<!--    <fragment-->
+<!--        android:id="@+id/left_fragment"-->
+<!--        android:name="com.example.irsis.Fragment.LeftFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        />-->
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_resUser"
+        android:text="新建用户"/>
 
 
 </LinearLayout>

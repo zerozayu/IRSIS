@@ -7,17 +7,15 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE/"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE/" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -27,30 +25,35 @@
         android:roundIcon="@mipmap/irsis"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".Activity.RegActivity"></activity>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="4XYqqGcPdnPE6CMv4mmwdaw686S3KkcE"/>
+            android:value="4XYqqGcPdnPE6CMv4mmwdaw686S3KkcE" />
 
-        <activity android:name=".LBSActivity"
-            android:label="开始巡检"/>
-        <activity android:name=".SubmitProblemActivity" />
-        <activity android:name=".LitePalActivity" />
-        <activity android:name=".ProblemContentActivity"
-            android:label="问题详情"/>
-        <activity android:name=".AdminActivity"
-            android:label="管理员界面"/>
-        <activity android:name=".ChatActivity"
-            android:label="聊天界面"/>
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".Activity.LBSActivity"
+            android:label="开始巡检" />
+        <activity android:name=".Activity.SubmitProblemActivity" />
+        <activity android:name=".Activity.LitePalActivity" />
+        <activity
+            android:name=".Activity.ProblemContentActivity"
+            android:label="问题详情"
+            android:theme="@style/ProblemContentActivityTheme" />
+        <activity
+            android:name=".Activity.AdminActivity"
+            android:label="管理员界面" />
+        <activity
+            android:name=".Activity.ChatActivity"
+            android:label="聊天界面" />
+        <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RuntimePermissionActivity">
+        <activity android:name=".Activity.MakeCallActivity">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -60,9 +63,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProblemActivity"
+            android:name=".Activity.ProblemActivity"
             android:label="问题列表">
-
             <intent-filter>
 
                 <!-- 指明当前活动可以响应com.example.activitytest.ACTION_START这个action -->
@@ -73,8 +75,9 @@
                 <category android:name="com.example.activitytest.MY_CATEGORY" />
             </intent-filter>
         </activity> <!-- 主活动 -->
-        <activity android:name=".MainActivity"
-            android:label="校园安全巡检系统"/>
+        <activity
+            android:name=".Activity.MainActivity"
+            android:label="校园安全巡检系统" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -86,11 +89,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service android:name="com.baidu.location.f" android:enabled="true"
-            android:process=":remote">
-
-        </service>
-
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
     </application>
 
 </manifest>
