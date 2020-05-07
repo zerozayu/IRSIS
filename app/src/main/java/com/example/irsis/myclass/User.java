@@ -9,7 +9,11 @@ public class User extends LitePalSupport {
     private String userName;
     private boolean limit;
 
-    public User() {
+    public User(){};
+    public User(String userName, String userAccount, String userPassword) {
+        this.userAccount = userAccount;
+        this.userPassword = userPassword;
+        this.userName = userName;
     }
     public User(int uId, String userAccount, String userPassword, String userName, boolean limit) {
         this.uId = uId;

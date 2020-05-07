@@ -1,4 +1,4 @@
-package com.example.irsis.adapter;
+package com.example.irsis.Activity.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

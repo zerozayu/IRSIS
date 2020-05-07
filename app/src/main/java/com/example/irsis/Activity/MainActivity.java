@@ -2,6 +2,7 @@ package com.example.irsis.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
@@ -10,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -33,6 +35,13 @@ import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    Button button_toProblemActivity;
+    Button button_toChatActivity;
+    Button button_toLBSActivity;
+    Button button_toAdminActivity;
+    Button button_toLitePalActivity;
+
+
     private EditText editText;
     private ImageView imageView;
     private ProgressBar progressBar;
@@ -55,21 +64,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
+
         //将打电话设为默认选中
-
         navView.setCheckedItem(R.id.nav_call);
-
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_call:
-                        intent =new Intent(MainActivity.this,MakeCallActivity.class);
+                        intent = new Intent(MainActivity.this, MakeCallActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.nav_offline:
-                        intent =new Intent("com.example.IRSIS.FORCE_OFFLINE");
+                        intent = new Intent("com.example.IRSIS.FORCE_OFFLINE");
                         sendBroadcast(intent);
                         break;
                 }
@@ -78,27 +86,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-
-        //跳转向问题列表界面
-        Button button_toProblemActivity = findViewById(R.id.button_toProblemActivity);
-        button_toProblemActivity.setOnClickListener(this);
-        //跳转向聊天界面
-        Button button_toChatActivity = findViewById(R.id.button_toChatActivity);
-        button_toChatActivity.setOnClickListener(this);
-        //跳转向地图界面
-        Button button_toLBSActivity = findViewById(R.id.button_toLBSActivity);
-        button_toLBSActivity.setOnClickListener(this);
-        //跳转向管理员界面
-        Button button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
-        button_toAdminActivity.setOnClickListener(this);
-
-        //跳转至数据库
-        Button button_toLitePalActivity = findViewById(R.id.button_toLitePalActivity);
-        button_toLitePalActivity.setOnClickListener(this);
-
-
+        findView();
+        setListener();
     }
 
+    public void findView() {
+        button_toProblemActivity = findViewById(R.id.button_toProblemActivity);
+        button_toChatActivity = findViewById(R.id.button_toChatActivity);
+        button_toLBSActivity = findViewById(R.id.button_toLBSActivity);
+        button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
+        button_toLitePalActivity = findViewById(R.id.button_toLitePalActivity);
+    }
+
+    public void setListener(){
+        //跳转向问题列表界面
+        button_toProblemActivity.setOnClickListener(this);
+        //跳转向聊天界面
+        button_toChatActivity.setOnClickListener(this);
+        //跳转向地图界面
+        button_toLBSActivity.setOnClickListener(this);
+        //跳转向管理员界面
+        button_toAdminActivity.setOnClickListener(this);
+        //跳转至数据库
+        button_toLitePalActivity.setOnClickListener(this);
+    }
 
     //重写onClick方法
     @Override
@@ -159,8 +170,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.main_login:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                if (IsLogin.isLogin==false) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("通知");
+                    builder.setMessage("你已经登录了，是否重新登陆？");
+                    builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent("com.example.IRSIS.FORCE_OFFLINE");
+                            sendBroadcast(intent);
+                            IsLogin.setIsLoginFalse();
+                        }
+                    });
+                    builder.show();
+
+                }
+
                 break;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);

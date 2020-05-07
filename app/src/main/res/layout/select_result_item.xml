@@ -3,17 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <Button
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_registerUser"
-        android:text="新建用户"/>
-
-    <Button
+        android:id="@+id/sr_name"/>
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_deleteUser"
-        android:text="删除用户"/>
-
+        android:id="@+id/sr_account"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sr_password"/>
 </LinearLayout>

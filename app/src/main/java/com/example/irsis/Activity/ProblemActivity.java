@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.irsis.R;
-import com.example.irsis.adapter.ProblemAdapter;
+import com.example.irsis.Activity.adapter.ProblemAdapter;
 import com.example.irsis.myclass.Problem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

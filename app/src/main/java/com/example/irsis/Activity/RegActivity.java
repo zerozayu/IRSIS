@@ -28,7 +28,6 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class RegActivity extends BaseActivity implements View.OnClickListener {
-    TextView id;
     EditText name;
     EditText account;
     EditText password;
@@ -49,7 +48,6 @@ public class RegActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void findView(){
-        id=findViewById(R.id.reg_id);
         name=findViewById(R.id.reg_name);
         account=findViewById(R.id.reg_account);
         password=findViewById(R.id.reg_password);

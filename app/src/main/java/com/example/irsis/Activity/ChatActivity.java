@@ -28,7 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.irsis.R;
-import com.example.irsis.adapter.MsgAdapter;
+import com.example.irsis.Activity.adapter.MsgAdapter;
 import com.example.irsis.myclass.Msg;
 
 import java.io.File;

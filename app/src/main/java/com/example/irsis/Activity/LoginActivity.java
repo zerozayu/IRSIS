@@ -106,7 +106,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 } else {
                     //与数据库的账号密码进行对比
-                    getAccount(LoginActivity.accountText);
+                    getAccount(accountText);
+                    //getAccount(LoginActivity.accountText);
                 }
                 break;
             default:
@@ -153,6 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     editor.clear();
                                 }
                                 editor.apply();
+                                IsLogin.setIsLoginTrue();
                                 Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(intent);
