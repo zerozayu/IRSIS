@@ -4,9 +4,9 @@
 
 
     <item
-        android:id="@+id/setting_main"
-        android:icon="@drawable/setting"
-        android:title="设置"
-        app:showAsAction="never"/>
+        android:id="@+id/main_login"
+        android:icon="@drawable/login"
+        android:title="登录"
+        app:showAsAction="always"/>
 
 </menu>

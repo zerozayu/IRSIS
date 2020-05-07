@@ -31,19 +31,6 @@ import org.litepal.LitePal;
 import java.util.List;
 import java.util.Objects;
 
-/*
- * 1.活动的启动模式：standard、singleTop、singleTask、singleInstance
- *       在AndroidManifest.xml中通过给<activity>标签指定android:launchMode属性来选择启动模式
- *   1.1 standard：每当启动一个新的活动，在返回栈中入栈，并处于栈顶的位置。
- *   1.2 singleTop：每当启动一个新的活动，如果栈顶已经是该活动，则直接使用他，不会再重新创建新的活动实例。
- *   1.3 singleTask：每次启动活动系统会首先在返回栈中检查是否存在该活动的实例，如果已经存在就直接使用该实例，并把
- *       在此活动之上的所有活动统统出栈；如果没有发现则创建一个新的活动实例。
- *   1.4 singleInstance：指定为singleInstance模式的活动会启用一个新的返回栈来管理这个活动。
- *
- *
- * */
-
-
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText editText;
@@ -171,14 +158,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_item:
-                Toast.makeText(this, "你点击了add", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.remove_item:
-                Toast.makeText(this, "你点击了remove", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.setting_main:
-                Toast.makeText(this, "你点击了setting", Toast.LENGTH_SHORT).show();
+            case R.id.main_login:
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
                 break;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);

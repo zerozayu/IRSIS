@@ -24,6 +24,7 @@ public class AdminActivity extends BaseActivity implements View.OnClickListener 
             case R.id.btn_resUser:
                 Intent intent = new Intent(AdminActivity.this, RegActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;
