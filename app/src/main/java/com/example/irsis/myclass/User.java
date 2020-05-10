@@ -1,34 +1,28 @@
 package com.example.irsis.myclass;
 
-import org.litepal.crud.LitePalSupport;
-
-public class User extends LitePalSupport {
-    private int uId;
+public class User{
+    private String userName;
     private String userAccount;
     private String userPassword;
-    private String userName;
-    private boolean limit;
+    private String userPhone;
+    private String userLimit;
 
-    public User(){};
-    public User(String userName, String userAccount, String userPassword) {
+    public User(){}
+
+    public User(String userName, String userAccount, String userPassword, String userPhone, String userLimit) {
+        this.userName = userName;
         this.userAccount = userAccount;
         this.userPassword = userPassword;
-        this.userName = userName;
-    }
-    public User(int uId, String userAccount, String userPassword, String userName, boolean limit) {
-        this.uId = uId;
-        this.userAccount = userAccount;
-        this.userPassword = userPassword;
-        this.userName = userName;
-        this.limit = limit;
+        this.userPhone = userPhone;
+        this.userLimit = userLimit;
     }
 
-    public int getuId() {
-        return uId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setuId(int uId) {
-        this.uId = uId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserAccount() {
@@ -47,19 +41,19 @@ public class User extends LitePalSupport {
         this.userPassword = userPassword;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserEmail() {
+        return userPhone;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserEmail(String userEmail) {
+        this.userPhone = userEmail;
     }
 
-    public boolean getLimit() {
-        return limit;
+    public String getUserLimit() {
+        return userLimit;
     }
 
-    public void setLimit(boolean limit) {
-        this.limit = limit;
+    public void setUserLimit(String userLimit) {
+        this.userLimit = userLimit;
     }
 }

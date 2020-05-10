@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,9 +23,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.irsis.R;
-import com.example.irsis.myclass.Problem;
-
-import org.litepal.LitePal;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,12 +36,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class SubmitProblemActivity extends BaseActivity implements View.OnClickListener {
-    public static final int TAKE_PHOTO = 2;
+    public static final int TAKE_PHOTO = 1;
     private Uri imageUri;
 
     private EditText edit_problemName=null;
     private EditText edit_problemContent=null;
     private ImageView picture_problem;
+    private ImageView button_takePhoto;
+    private Button button_submitProblem;
 
     byte[] images=null;
 
@@ -52,12 +52,11 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_problem);
-        //数据库
-        LitePal.getDatabase();
 
-        //声明组件:问题名字、问题内容、图片显示(默认invisible)、拍照按钮、提交按钮
-        edit_problemName = findViewById(R.id.editText_problemName);
-        edit_problemContent = findViewById(R.id.editText_problemContent);
+        findView();
+        setListener();
+
+        //继续上次编辑
         String problemNameText = loadProblemName();
         String problemContentText = loadProblemContent();
         if (!TextUtils.isEmpty(problemNameText) || !TextUtils.isEmpty(problemContentText)) {
@@ -68,17 +67,8 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
             Toast.makeText(this, "继续上次编辑", Toast.LENGTH_SHORT).show();
         }
 
-
-        picture_problem = findViewById(R.id.picture_problem);
-
-
-        ImageView button_takePhoto = findViewById(R.id.button_takePhoto_problem);
-        button_takePhoto.setOnClickListener(this);
-
-        Button button_submitProblem = findViewById(R.id.button_submitProblem);
-        button_submitProblem.setOnClickListener(this);
-
     }
+
 
     @Override
     public void onClick(View view) {
@@ -86,10 +76,10 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.button_takePhoto_problem:
                 File outputProblemImage = new File(getExternalCacheDir(), "output_problemImage");
-                if (outputProblemImage.exists()) {
-                    outputProblemImage.delete();
-                }
                 try {
+                    if (outputProblemImage.exists()) {
+                        outputProblemImage.delete();
+                    }
                     outputProblemImage.createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -107,12 +97,7 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.button_submitProblem:
-                //数据库存储操作
-                Problem problem = new Problem();
-                problem.setIamge(images);
-                problem.setName(edit_problemName.getText().toString());
-                problem.setContent(edit_problemContent.getText().toString());
-                problem.save();
+
 
                 if (images==null){
                     //弹出对话框
@@ -135,6 +120,9 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                     builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+
+
+
                             onBackPressed();
                             edit_problemName.setText("");
                             edit_problemContent.setText("");
@@ -169,17 +157,33 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                 if (resultCode == RESULT_OK) {
                     Bitmap bitmap = null;
                     try {
+                        //将拍摄的照片显示出来
                         bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                        picture_problem.setImageBitmap(bitmap);
+                        images=img(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    picture_problem.setImageBitmap(bitmap);
-                    images = img(bitmap);
+
                 }
                 break;
             default:
                 break;
         }
+    }
+
+
+
+    public void findView(){
+        edit_problemName = findViewById(R.id.editText_problemName);
+        edit_problemContent = findViewById(R.id.editText_problemContent);
+        picture_problem = findViewById(R.id.picture_problem);
+        button_takePhoto = findViewById(R.id.button_takePhoto_problem);
+        button_submitProblem = findViewById(R.id.button_submitProblem);
+    }
+    public void setListener(){
+        button_takePhoto.setOnClickListener(this);
+        button_submitProblem.setOnClickListener(this);
     }
 
     //save方法用于保存inputText
@@ -204,7 +208,6 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
             }
         }
     }
-
     public void saveProblemContent(String problemContentText) {
         BufferedWriter bw = null;
         try {
@@ -226,12 +229,11 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
             }
         }
     }
-
     //load方法用于从文件中读取数据
     public String loadProblemName() {
         BufferedReader br = null;
         StringBuilder content = new StringBuilder();
-        ;
+
         try {
             FileInputStream fis = openFileInput("problemName.txt");
             br = new BufferedReader(new InputStreamReader(fis));
@@ -254,7 +256,6 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
         }
         return content.toString();
     }
-
     public String loadProblemContent() {
         BufferedReader br = null;
         StringBuilder content = new StringBuilder();

@@ -34,7 +34,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private EditText passwordEdit;
     private CheckBox rememberPassword;
     private Button login;
-    private LinearLayout loadingLayout;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -42,7 +41,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private static String passwordText;
     DatabaseActions action=new DatabaseActions();
     ResultSet rs=null;
-    public String  ans_string;
     public String myaccount;
     public String mypassword;
 
@@ -67,7 +65,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         passwordEdit = findViewById(R.id.password);
         rememberPassword = findViewById(R.id.remember_password);
         login = findViewById(R.id.button_login);
-        loadingLayout = findViewById(R.id.loading_layout);
     }
 
     //监听器
@@ -94,6 +91,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //登录按钮
             case R.id.button_login:
                 accountText = accountEdit.getText().toString().trim();
                 passwordText = passwordEdit.getText().toString().trim();
@@ -129,20 +127,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }).start();
     }
 
+    boolean accir;
+    boolean pwdir;
     @SuppressLint("HandlerLeak")
     public android.os.Handler handler =new android.os.Handler(){
         public void handleMessage(android.os.Message msg){
             switch (msg.what){
                 case 1:
                     try {
-                        if(rs.next()){
+                        while(rs.next()){
                             myaccount= ((ResultSet) msg.obj).getString("Uaccount");
                             mypassword=((ResultSet) msg.obj).getString("Upassword");
                             if(!accountText.equals(myaccount)){
-                                Toast.makeText(LoginActivity.this,"账号不存在",Toast.LENGTH_SHORT).show();
+                                accir=false;
+                                //Toast.makeText(LoginActivity.this,"账号不存在",Toast.LENGTH_SHORT).show();
                             }
                             else if (!passwordText.equals(mypassword)){
-                                Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
+                                pwdir=false;
+                                //Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 editor = pref.edit();
@@ -154,12 +156,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     editor.clear();
                                 }
                                 editor.apply();
-                                IsLogin.setIsLoginTrue();
-                                Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                accir=true;
+                                pwdir=true;
                             }
+                        }
+                        if(!accir){
+                            Toast.makeText(LoginActivity.this,"账号不存在",Toast.LENGTH_SHORT).show();
+                        }else if(!pwdir){
+                            Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
+                        }else {
+                            IsLogin.setIsLoginTrue();
+                            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();

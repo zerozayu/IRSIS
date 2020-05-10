@@ -27,14 +27,18 @@ public class SelectActivity extends BaseActivity {
     EditText editText_selectByAccount;
     Button btn_select;
     RecyclerView recyclerView_selectResult;
+    SelectResultAdapter adapter;
 
     private List<User> userList=new ArrayList<>();
     private static String accountText;
     ResultSet rs=null;
     DatabaseActions action=new DatabaseActions();
+    public static int count=0;
     public String myname;
     public String myaccount;
     public String mypassword;
+    public String myphone;
+    public String mylimit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class SelectActivity extends BaseActivity {
         recyclerView_selectResult = findViewById(R.id.recyclerView_selectResult);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView_selectResult.setLayoutManager(layoutManager);
-        SelectResultAdapter adapter = new SelectResultAdapter(userList);
+        adapter = new SelectResultAdapter(userList);
         recyclerView_selectResult.setAdapter(adapter);
 
     }
@@ -63,6 +67,7 @@ public class SelectActivity extends BaseActivity {
             public void onClick(View view) {
                 accountText=editText_selectByAccount.getText().toString().trim();
                 getUser(accountText);
+                count++;
             }
         });
     }
@@ -85,11 +90,13 @@ public class SelectActivity extends BaseActivity {
             switch (msg.what){
                 case 1:
                     try {
-                        if(rs.next()){
-                            myname="姓名："+((ResultSet) msg.obj).getString("Uname");
-                            myaccount="账号：" +((ResultSet) msg.obj).getString("Uaccount");
-                            mypassword="密码："+((ResultSet) msg.obj).getString("Upassword");
-                            User user=new User(myname,myaccount,mypassword);
+                        while (rs.next()){
+                            myname=((ResultSet) msg.obj).getString("Uname");
+                            myaccount=((ResultSet) msg.obj).getString("Uaccount");
+                            mypassword=((ResultSet) msg.obj).getString("Upassword");
+                            myphone=((ResultSet) msg.obj).getString("Uphone");
+                            mylimit=((ResultSet) msg.obj).getString("Ulimit");
+                            User user=new User(myname,myaccount,mypassword,myphone,mylimit);
                             userList.add(user);
                         }
                     } catch (SQLException e) {

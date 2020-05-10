@@ -73,7 +73,7 @@
         <ImageView
             android:id="@+id/picture_problem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="300dp"/>
 
         <ImageView
             android:id="@+id/button_takePhoto_problem"

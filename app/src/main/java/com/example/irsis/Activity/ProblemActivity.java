@@ -6,13 +6,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.irsis.JDBC.DatabaseActions;
 import com.example.irsis.R;
 import com.example.irsis.Activity.adapter.ProblemAdapter;
 import com.example.irsis.myclass.Problem;
@@ -20,36 +23,41 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.litepal.LitePal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProblemActivity extends BaseActivity {
 
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerView;
-
-    private List<Problem> getProblem(){
-        List<Problem> problemList=LitePal.findAll(Problem.class);
-        return problemList;
-    };
-
     private ProblemAdapter adapter;
+    FloatingActionButton fab;
+    Toolbar toolbar;
+
+    DatabaseActions action = new DatabaseActions();
+    ResultSet rs = null;
+    public String pname;
+    public String pcontent;
+    public byte[] pimage;
+    List<Problem> problemList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_problem);
+        findView();
         setSupportActionBar(toolbar);
 
-        recyclerView=findViewById(R.id.problem_recyclerView);
-        GridLayoutManager layoutManager=new GridLayoutManager(this,2);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new ProblemAdapter(getProblem());
+        adapter = new ProblemAdapter(problemList);
         recyclerView.setAdapter(adapter);
 
         //悬浮新增按钮
-        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +67,6 @@ public class ProblemActivity extends BaseActivity {
         });
 
         //下拉刷新
-        swipeRefresh=findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -68,11 +75,19 @@ public class ProblemActivity extends BaseActivity {
             }
         });
 
+        getProblem();
+    }
+
+    public void findView() {
+        recyclerView = findViewById(R.id.problem_recyclerView);
+        toolbar = findViewById(R.id.toolbar_problem);
+        fab = findViewById(R.id.fab);
+        swipeRefresh = findViewById(R.id.swipe_refresh);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -101,13 +116,13 @@ public class ProblemActivity extends BaseActivity {
         return true;
     }
 
-    private void initProblems(){
-        getProblem().clear();
-        adapter=new ProblemAdapter(getProblem());
+    private void initProblems() {
+        problemList.clear();
+        adapter = new ProblemAdapter(problemList);
         recyclerView.setAdapter(adapter);
     }
 
-    private void refreshProblems(){
+    private void refreshProblems() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -127,4 +142,39 @@ public class ProblemActivity extends BaseActivity {
             }
         }).start();
     }
+
+    //查询problem
+    public void getProblem() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                rs = action.selectProblem();
+                Message msg = handler.obtainMessage();
+                msg.what = 1;
+                msg.obj = rs;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    @SuppressLint("HandlerLeak")
+    public android.os.Handler handler = new android.os.Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case 1:
+                    try {
+                        while (rs.next()) {
+                            pname = ((ResultSet) msg.obj).getString("Pname");
+                            pcontent = ((ResultSet) msg.obj).getString("Pcontent");
+                            pimage = ((ResultSet) msg.obj).getBytes("Pimage");
+                            Problem problem = new Problem(pname,pcontent,pimage);
+                            problemList.add(problem);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    };
 }

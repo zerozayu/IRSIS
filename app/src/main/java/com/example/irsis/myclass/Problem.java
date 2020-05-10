@@ -1,38 +1,20 @@
 package com.example.irsis.myclass;
 
-import org.litepal.crud.LitePalSupport;
 
-public class Problem extends LitePalSupport {
+public class Problem {
 
-    private int Pid;
     private String Pname;
     private String Pcontent;
     private byte[] Pimage;
 
-    public byte[] getIamge() {
-        return Pimage;
-    }
-
-    public void setIamge(byte[] image) {
-        this.Pimage = image;
-    }
-
-
 
     public Problem() {
     }
-    public Problem(int id, String name, String content) {
-        this.Pid = id;
-        this.Pname = name;
-        this.Pcontent = content;
-    }
 
-    public int getpId() {
-        return Pid;
-    }
-
-    public void setpId(int pId) {
-        this.Pid = pId;
+    public Problem(String pname, String pcontent, byte[] pimage) {
+        Pname = pname;
+        Pcontent = pcontent;
+        Pimage = pimage;
     }
 
     public String getName() {
@@ -48,5 +30,13 @@ public class Problem extends LitePalSupport {
     public void setContent(String content) {
         this.Pcontent = content;
     }
+
+    public byte[] getIamge() {
+        return Pimage;
+    }
+    public void setIamge(byte[] image) {
+        this.Pimage = image;
+    }
+
 
 }

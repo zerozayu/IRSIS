@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.irsis.R;
@@ -192,7 +193,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         }
                     });
                     builder.show();
-
                 }
 
                 break;

@@ -2,6 +2,7 @@ package com.example.irsis.JDBC;
 
 import android.util.Log;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,7 +40,7 @@ public class DatabaseActions {
     }
 
     //关闭连接
-    public void close(Connection conn) {
+    public void close() {
         if (null != conn) {
             try {
                 conn.close();
@@ -51,21 +52,23 @@ public class DatabaseActions {
     }
 
     //插入用户（Uname,Uaccount,Upassword）
-    public boolean register(String Uname, String Uaccount, String Upassword) {
-        String sql = "insert into user values(?,?,?)";
+    public boolean register(String Uname, String Uaccount, String Upassword,String Uphone,String Ulimit) {
+        String sql = "insert into user values(?,?,?,?,?)";
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Uname);
             pstmt.setString(2, Uaccount);
             pstmt.setString(3, Upassword);
+            pstmt.setString(4,Uphone);
+            pstmt.setString(5,Ulimit);
             pstmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println("插入失败！");
             e.printStackTrace();
             return false;
         }
         return true;
     }
+
     //根据Uaccount查询用户信息
     public ResultSet selectByUaccount(String Uaccount) {
         conn = this.getConnection();
@@ -75,40 +78,52 @@ public class DatabaseActions {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Uaccount);
             rs = pstmt.executeQuery();
-            System.out.println("rs--------------->"+rs.toString());
         } catch (SQLException e) {
             System.out.println("account查询错误！");
+            e.printStackTrace();
         }
         return rs;
     }
 
     //根据account删除用户
     public boolean deleteUserByAccount(String Uaccount) {
-        String sql = "delete from user where Uaccont = ?";
+        String sql = "delete from user where Uaccount = ?";
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, Uaccount);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("用户删除失败");
             e.printStackTrace();
             return false;
         }
         return true;
     }
 
-    //根据account更改用户信息
-    public boolean updateUserByAccount( String Uname, String Uaccount, String Upassword) {
-        String sql = "update user set Uname =? ,Uaccount = ? ,Upassword = ? where Uaccount = ?";
+    //根据Uaccount查询用户信息
+    public ResultSet selectProblem() {
+        conn = this.getConnection();
+        try {
+            //非条件查询直接赋值
+            String sql= "select * from problem";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("account查询错误！");
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    //插入问题
+    public boolean insertProblem(String Pname, String Pcontent, String Pimage) {
+        String sql = "insert into problem values(?,?,?)";
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, Uname);
-            pstmt.setString(2, Uaccount);
-            pstmt.setString(3, Upassword);
-            pstmt.setString(4, Uaccount);
+            pstmt.setString(1, Pname);
+            pstmt.setString(2, Pcontent);
+            pstmt.setString(3,Pimage);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("用户更新失败！");
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

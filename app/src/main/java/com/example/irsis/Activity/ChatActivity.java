@@ -136,7 +136,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                     imageUri = Uri.fromFile(outputImage);
                 }
                 //启动相机程序
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                Intent intent = new Intent("android.media.Action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(intent, TAKE_PHOTO);
                 break;
@@ -189,7 +189,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     //自定义方法打开相册
     private void openAlbum() {
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        Intent intent = new Intent("android.intent.Action.GET_CONTENT");
         intent.setType("image/*");
         startActivityForResult(intent, CHOOSE_PHOTO);
     }
