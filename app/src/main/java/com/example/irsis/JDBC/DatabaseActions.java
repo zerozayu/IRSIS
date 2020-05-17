@@ -1,8 +1,7 @@
 package com.example.irsis.JDBC;
 
-import android.util.Log;
-
-import java.sql.Blob;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,8 +16,9 @@ public class DatabaseActions {
     private static final String url = "jdbc:mysql://39.106.169.97:3506/zhangyu?useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true";
 
     static private Connection conn = null;
-    private PreparedStatement pstmt=null;
+    private PreparedStatement psmt = null;
     private ResultSet rs;
+    private InputStream is = null;
 
     //构造器
     public DatabaseActions() {
@@ -52,16 +52,16 @@ public class DatabaseActions {
     }
 
     //插入用户（Uname,Uaccount,Upassword）
-    public boolean register(String Uname, String Uaccount, String Upassword,String Uphone,String Ulimit) {
+    public boolean register(String Uname, String Uaccount, String Upassword, String Uphone, String Ulimit) {
         String sql = "insert into user values(?,?,?,?,?)";
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, Uname);
-            pstmt.setString(2, Uaccount);
-            pstmt.setString(3, Upassword);
-            pstmt.setString(4,Uphone);
-            pstmt.setString(5,Ulimit);
-            pstmt.executeUpdate();
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, Uname);
+            psmt.setString(2, Uaccount);
+            psmt.setString(3, Upassword);
+            psmt.setString(4, Uphone);
+            psmt.setString(5, Ulimit);
+            psmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -74,10 +74,10 @@ public class DatabaseActions {
         conn = this.getConnection();
         try {
             //非条件查询直接赋值
-            String sql= "select * from user where Uaccount = ? ";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, Uaccount);
-            rs = pstmt.executeQuery();
+            String sql = "select * from user where Uaccount = ? ";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, Uaccount);
+            rs = psmt.executeQuery();
         } catch (SQLException e) {
             System.out.println("account查询错误！");
             e.printStackTrace();
@@ -89,9 +89,9 @@ public class DatabaseActions {
     public boolean deleteUserByAccount(String Uaccount) {
         String sql = "delete from user where Uaccount = ?";
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, Uaccount);
-            pstmt.executeUpdate();
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, Uaccount);
+            psmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -104,9 +104,10 @@ public class DatabaseActions {
         conn = this.getConnection();
         try {
             //非条件查询直接赋值
-            String sql= "select * from problem";
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
+            String sql = "select * from problem";
+            psmt = conn.prepareStatement(sql);
+            rs = psmt.executeQuery();
+            System.out.println("pro查询成功！");
         } catch (SQLException e) {
             System.out.println("account查询错误！");
             e.printStackTrace();
@@ -115,14 +116,17 @@ public class DatabaseActions {
     }
 
     //插入问题
-    public boolean insertProblem(String Pname, String Pcontent, String Pimage) {
-        String sql = "insert into problem values(?,?,?)";
+    public boolean DBInsertProblem(String Pname, String Pcontent, String Pimage) {
+        String sql = "insert into problem ( Pname , Pcontent , Pimage) values (?,?,?)";
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, Pname);
-            pstmt.setString(2, Pcontent);
-            pstmt.setString(3,Pimage);
-            pstmt.executeUpdate();
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, Pname);
+            psmt.setString(2, Pcontent);
+
+            is = new FileInputStream(Pimage);
+            psmt.setBinaryStream(3, is, is.available());
+
+            psmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -131,15 +135,14 @@ public class DatabaseActions {
     }
 
 
-
     //查询所有用户
     public ResultSet selectAll() {
         //  conn = this.getConnection();
         try {
             String sql;
             sql = "select * from user order by Uaccount asc ";
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
+            psmt = conn.prepareStatement(sql);
+            rs = psmt.executeQuery();
         } catch (SQLException e) {
             System.out.println("用户名查询错误！");
         }

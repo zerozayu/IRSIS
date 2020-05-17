@@ -2,6 +2,7 @@ package com.example.irsis.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
@@ -13,15 +14,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.irsis.JDBC.Action;
 import com.example.irsis.R;
 
 import java.io.BufferedReader;
@@ -46,15 +50,23 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
     private Button button_submitProblem;
 
     byte[] images=null;
+    Action action;
+    String problemName;
+    String problemContent;
+    @SuppressLint("SdCardPath")
+    String ImagePath="/sdcard/Android/data/com.example.irsis/cache/output_problemImage.jpg";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_problem);
+        Toolbar toolbar = findViewById(R.id.toolbar_submitProblem);
+        setSupportActionBar(toolbar);
 
         findView();
         setListener();
+
 
         //继续上次编辑
         String problemNameText = loadProblemName();
@@ -75,7 +87,7 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
 
         switch (view.getId()) {
             case R.id.button_takePhoto_problem:
-                File outputProblemImage = new File(getExternalCacheDir(), "output_problemImage");
+                File outputProblemImage = new File(getExternalCacheDir(), "output_problemImage.jpg");
                 try {
                     if (outputProblemImage.exists()) {
                         outputProblemImage.delete();
@@ -90,6 +102,7 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                 } else {
                     imageUri = Uri.fromFile(outputProblemImage);
                 }
+
                 //启动相机程序
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -120,9 +133,9 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
                     builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
+                            action=new Action();
+                            action.insertProblem(edit_problemName.getText().toString().trim(),
+                                    edit_problemContent.getText().toString().trim(),ImagePath);
                             onBackPressed();
                             edit_problemName.setText("");
                             edit_problemContent.setText("");
@@ -143,8 +156,8 @@ public class SubmitProblemActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        String problemName = edit_problemName.getText().toString();
-        String problemContent = edit_problemContent.getText().toString();
+        problemName = edit_problemName.getText().toString().trim();
+        problemContent = edit_problemContent.getText().toString().trim();
         saveProblemName(problemName);
         saveProblemContent(problemContent);
     }

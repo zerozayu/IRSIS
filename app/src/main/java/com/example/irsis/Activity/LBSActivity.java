@@ -1,169 +1,91 @@
 package com.example.irsis.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
+import androidx.appcompat.widget.Toolbar;
+
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.example.irsis.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LBSActivity extends BaseActivity {
 
-    public LocationClient mLocationClient;
-    private TextView positionText;
-    //mapView
-    private MapView mapView;
-    private BaiduMap baiduMap;
-    private boolean isFirstLocate=true;
-
-
+    private TextView text_lbs;
+    private MapView mapView = null;
+    private AMap aMap;
+    private MyLocationStyle myLocationStyle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //注册定位监视器
-        mLocationClient = new LocationClient(getApplicationContext());
-        mLocationClient.registerLocationListener(new MyLocationListener());
-        SDKInitializer.initialize(getApplicationContext());
-
         setContentView(R.layout.activity_lbs);
+        Toolbar toolbar = findViewById(R.id.toolbar_lbs);
+        setSupportActionBar(toolbar);
+        text_lbs = findViewById(R.id.text_lbs);
 
-        //声明地理位置信息
-        positionText = findViewById(R.id.position_textView);
-        mapView = findViewById(R.id.bmapView);
-        baiduMap = mapView.getMap();
-        baiduMap.setMyLocationEnabled(true);
+        //获取地图控件引用
+        mapView = findViewById(R.id.map);
+        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
+        mapView.onCreate(savedInstanceState);
+        //定义了一个地图view
+        mapView = (MapView) findViewById(R.id.map);
+        mapView.onCreate(savedInstanceState);// 此方法须覆写，虚拟机需要在很多情况下保存地图绘制的当前状态。
+        initMap();
 
-        //创建空集合，依次判断是否有权限，最后转为数组，在一次性调用ActivityCompat.requestPermissions申请
-        List<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(LBSActivity.this, Manifest.
-                permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+
+    }
+
+    public void initMap(){
+        //初始化地图控制器对象
+        if (aMap == null) {
+            aMap = mapView.getMap();
         }
-        if (ContextCompat.checkSelfPermission(LBSActivity.this, Manifest.
-                permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(LBSActivity.this, Manifest.
-                permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(LBSActivity.this, permissions, 1);
-        } else {
-            requestLocation();
-        }
+        myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
+        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
+        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
     }
 
-    private void navigateTo(BDLocation location) {
-        if (isFirstLocate) {
-            //获取经纬度
-            LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
-            //刷新位置
-            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
-            baiduMap.animateMapStatus(update);
-            //精度
-            update = MapStatusUpdateFactory.zoomTo(16f);
-            baiduMap.animateMapStatus(update);
-            isFirstLocate = false;
-        }
-        MyLocationData.Builder locationBuilder =new MyLocationData.Builder();
-        locationBuilder.latitude(location.getLatitude());
-        locationBuilder.longitude(location.getLongitude());
-        MyLocationData locationData=locationBuilder.build();
-        baiduMap.setMyLocationData(locationData);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
 
-    //启动位置信息
-    private void requestLocation() {
-        initLocation();
-        mLocationClient.start();
-    }
 
-    //实时更新当前的位置信息，每5秒定位一次
-    private void initLocation() {
-        LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(5000);
-        option.setIsNeedAddress(true);
-        mLocationClient.setLocOption(option);
-    }
 
-    //销毁活动时调用stop（）来停止定位
+
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mLocationClient.stop();
+        //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mapView.onDestroy();
-        baiduMap.setMyLocationEnabled(false);
+        aMap.clear();
+        aMap=null;
     }
-
-    //自定义MyLocationListener
-    public class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation( BDLocation bdLocation) {
-            if (bdLocation.getLocType()==BDLocation.TypeGpsLocation
-                    ||bdLocation.getLocType()==BDLocation.TypeNetWorkLocation){
-                navigateTo(bdLocation);
-            }
-        }
-    }
-
-    //申请权限
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0) {
-                    for (int result : grantResults) {
-                        if (result != PackageManager.PERMISSION_GRANTED) {
-                            Toast.makeText(this, "必须同意所有权限才能使用本程序", Toast.LENGTH_SHORT).show();
-                            finish();
-                            return;
-                        }
-                    }
-                    requestLocation();
-                } else {
-                    Toast.makeText(this, "发生未知错误", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
-            default:
-        }
+    protected void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
+        mapView.onResume();
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
+        mapView.onPause();
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
+        mapView.onSaveInstanceState(outState);
+    }
 
 }

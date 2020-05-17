@@ -5,69 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.LitePalActivity">
+    tools:context=".Activity.dingweiActivity">
 
-    <Button
-        android:id="@+id/button_createDatabase"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="创建数据库跟表" />
 
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="请输入id"-->
-<!--        android:id="@+id/litepal_id"/>-->
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="请输入名字"-->
-<!--        android:id="@+id/litepal_name"/>-->
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="请输入账户名"-->
-<!--        android:id="@+id/litepal_account"/>-->
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="请输入密码"-->
-<!--        android:id="@+id/litepal_password"/>-->
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="请输入权限"-->
-<!--        android:id="@+id/litepal_limit"/>-->
 
-    <Button
-        android:id="@+id/button_addData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="添加" />
-
-    <Button
-        android:id="@+id/button_updateData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="更新" />
-
-    <Button
-        android:id="@+id/button_deleteData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="删除" />
-
-    <Button
-        android:id="@+id/button_queryData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查询" />
-
-    <TextView
-        android:id="@+id/textView_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="jieguo"/>
 
 
 </LinearLayout>

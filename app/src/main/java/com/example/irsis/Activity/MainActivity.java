@@ -22,8 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.irsis.R;
 import com.example.irsis.myclass.User;
@@ -32,7 +30,6 @@ import com.google.android.material.navigation.NavigationView;
 import org.litepal.LitePal;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -135,6 +132,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 manager.notify(1, notification);
 
                 startActivity(intent);
+                finish();
                 break;
             case R.id.button_toChatActivity:
                 intent = new Intent(MainActivity.this, ChatActivity.class);
@@ -150,7 +148,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.button_toLitePalActivity:
-                intent = new Intent(MainActivity.this, LitePalActivity.class);
+                intent = new Intent(MainActivity.this, TrackActivity.class);
                 startActivity(intent);
                 break;
 

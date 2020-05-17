@@ -1,6 +1,5 @@
 package com.example.irsis.JDBC;
 
-import java.sql.Blob;
 
 public class Action {
     private DatabaseActions action;
@@ -36,7 +35,10 @@ public class Action {
             @Override
             public void run() {
                 action=new DatabaseActions();
-                action.insertProblem(Pname,Pcontent,Pimage);
+                boolean a=action.DBInsertProblem(Pname,Pcontent,Pimage);
+                if (a){
+                    System.out.println("插入问题成功");
+                }
             }
         }).start();
     }

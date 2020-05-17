@@ -193,7 +193,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         intent.setType("image/*");
         startActivityForResult(intent, CHOOSE_PHOTO);
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {

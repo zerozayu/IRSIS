@@ -8,11 +8,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.irsis.JDBC.DatabaseActions;
@@ -21,12 +27,20 @@ import com.example.irsis.Activity.adapter.ProblemAdapter;
 import com.example.irsis.myclass.Problem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.litepal.LitePal;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class ProblemActivity extends BaseActivity {
 
@@ -36,22 +50,32 @@ public class ProblemActivity extends BaseActivity {
     FloatingActionButton fab;
     Toolbar toolbar;
 
+
     DatabaseActions action = new DatabaseActions();
     ResultSet rs = null;
     public String pname;
     public String pcontent;
     public byte[] pimage;
     List<Problem> problemList = new ArrayList<>();
+    InputStream is;
+    OutputStream os;
+
+    byte[] a=null;
+
+    private Problem[] problems={new Problem("1","1",a),
+            new Problem("11","1",a),
+            new Problem("111","1",a),
+            new Problem("1111","1",a)};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
-
-        findView();
+        Toolbar toolbar = findViewById(R.id.toolbar_problem);
         setSupportActionBar(toolbar);
 
+        findView();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ProblemAdapter(problemList);
@@ -74,15 +98,29 @@ public class ProblemActivity extends BaseActivity {
                 refreshProblems();
             }
         });
+        refreshProblems();
 
-        getProblem();
     }
+
+    public void initPro(){
+        problemList.clear();
+        for (int i = 0; i < 20; i++) {
+            Random random = new Random();
+            int index=random.nextInt(problems.length);
+            problemList.add(problems[index]);
+
+        }
+        System.out.println("111:"+problemList);
+    }
+
+
 
     public void findView() {
         recyclerView = findViewById(R.id.problem_recyclerView);
         toolbar = findViewById(R.id.toolbar_problem);
         fab = findViewById(R.id.fab);
         swipeRefresh = findViewById(R.id.swipe_refresh);
+
     }
 
     @Override
@@ -116,13 +154,10 @@ public class ProblemActivity extends BaseActivity {
         return true;
     }
 
-    private void initProblems() {
-        problemList.clear();
-        adapter = new ProblemAdapter(problemList);
-        recyclerView.setAdapter(adapter);
-    }
+
 
     private void refreshProblems() {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -134,14 +169,32 @@ public class ProblemActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        initProblems();
+                        problemList.clear();
+                        getProblem();
+                    }
+                });
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter = new ProblemAdapter(problemList);
+                        recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                        if(problemList.isEmpty()){
+                            Toast.makeText(ProblemActivity.this,"刷新失败，请稍后再试。",Toast.LENGTH_SHORT).show();
+                        }
                         swipeRefresh.setRefreshing(false);
                     }
                 });
             }
         }).start();
     }
+
+
 
     //查询problem
     public void getProblem() {
@@ -150,7 +203,7 @@ public class ProblemActivity extends BaseActivity {
             public void run() {
                 rs = action.selectProblem();
                 Message msg = handler.obtainMessage();
-                msg.what = 1;
+                msg.what = 2;
                 msg.obj = rs;
                 handler.sendMessage(msg);
             }
@@ -158,23 +211,68 @@ public class ProblemActivity extends BaseActivity {
     }
 
     @SuppressLint("HandlerLeak")
-    public android.os.Handler handler = new android.os.Handler() {
-        public void handleMessage(android.os.Message msg) {
+    public Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 1:
+                case 2:
                     try {
                         while (rs.next()) {
+
                             pname = ((ResultSet) msg.obj).getString("Pname");
                             pcontent = ((ResultSet) msg.obj).getString("Pcontent");
-                            pimage = ((ResultSet) msg.obj).getBytes("Pimage");
+
+                            is=((ResultSet)msg.obj).getBinaryStream("Pimage");
+                            File file=new File("/sdcard/Android/data/com.example.irsis/"+pname+".jpg");
+                            os = new FileOutputStream(file);
+
+                            byte[] b = new byte[1024];
+                            int len = 0;
+                            while((len=is.read(b))!=-1){
+                                os.write(b, 0, len);
+                            }
+
+                            os.close();
+                            is.close();
+
+                            pimage=getPimage(file.getAbsolutePath());
+
                             Problem problem = new Problem(pname,pcontent,pimage);
+                            System.out.println(problem.toString());
                             problemList.add(problem);
                         }
+                        System.out.println("handler:"+problemList);
                     } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
             }
         }
     };
+
+    public byte[] getPimage(String filePath){
+        File file=new File(filePath);
+        ByteArrayOutputStream bos = null;
+        try {
+            FileInputStream in = new FileInputStream(file);
+            bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int i = 0;
+            while ((i = in.read(b)) != -1) {
+                bos.write(b, 0, b.length);
+            }
+            bos.close();
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bos.toByteArray();
+    }
 }

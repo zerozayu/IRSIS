@@ -4,18 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activity.LBSActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/position_textView"
-        android:visibility="gone"/>
 
-    <com.baidu.mapapi.map.MapView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_lbs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <TextView
+        android:id="@+id/text_lbs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/bmapView"
-        android:clickable="true"/>
+        android:text="@string/app_name" />
 
 </LinearLayout>
