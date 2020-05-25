@@ -1,15 +1,20 @@
 package com.example.irsis.Activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.example.irsis.R;
+import com.google.android.material.navigation.NavigationView;
 
 public class LBSActivity extends BaseActivity {
 
@@ -17,6 +22,7 @@ public class LBSActivity extends BaseActivity {
     private MapView mapView = null;
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
+    private DrawerLayout mDrawerLayout;
 
 
     @Override
@@ -26,6 +32,26 @@ public class LBSActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_lbs);
         setSupportActionBar(toolbar);
         text_lbs = findViewById(R.id.text_lbs);
+        mDrawerLayout = findViewById(R.id.drawer_layout_lbs);
+        NavigationView navView = findViewById(R.id.nav_view_lbs);
+        //将打电话设为默认选中
+        navView.setCheckedItem(R.id.nav_startTrack);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.nav_startTrack:
+
+                        break;
+                    case R.id.nav_finishTrack:
+
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         //获取地图控件引用
         mapView = findViewById(R.id.map);

@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="304307556@qq.com"
+        android:text="17806298743"
         android:textColor="#FFF"
         android:textSize="14sp" />
 
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/mail"
-        android:text="张瑜"
+        android:text="admin"
         android:textColor="#FFF"
         android:textSize="14sp" />
 

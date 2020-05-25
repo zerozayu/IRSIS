@@ -60,14 +60,6 @@ public class ProblemActivity extends BaseActivity {
     InputStream is;
     OutputStream os;
 
-    byte[] a=null;
-
-    private Problem[] problems={new Problem("1","1",a),
-            new Problem("11","1",a),
-            new Problem("111","1",a),
-            new Problem("1111","1",a)};
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,16 +94,7 @@ public class ProblemActivity extends BaseActivity {
 
     }
 
-    public void initPro(){
-        problemList.clear();
-        for (int i = 0; i < 20; i++) {
-            Random random = new Random();
-            int index=random.nextInt(problems.length);
-            problemList.add(problems[index]);
 
-        }
-        System.out.println("111:"+problemList);
-    }
 
 
 
@@ -140,14 +123,7 @@ public class ProblemActivity extends BaseActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add:
-                Intent intent = new Intent(ProblemActivity.this, SubmitProblemActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.delete:
-                Toast.makeText(this, "你点击了Delete", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.setting:
-                Toast.makeText(this, "你点击了Setting", Toast.LENGTH_SHORT).show();
+                refreshProblems();
                 break;
             default:
         }
@@ -157,6 +133,7 @@ public class ProblemActivity extends BaseActivity {
 
 
     private void refreshProblems() {
+        Toast.makeText(ProblemActivity.this,"刷新中......",Toast.LENGTH_LONG).show();
 
         new Thread(new Runnable() {
             @Override
