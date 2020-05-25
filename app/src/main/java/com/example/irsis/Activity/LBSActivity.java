@@ -31,9 +31,6 @@ public class LBSActivity extends BaseActivity {
         mapView = findViewById(R.id.map);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mapView.onCreate(savedInstanceState);
-        //定义了一个地图view
-        mapView = (MapView) findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);// 此方法须覆写，虚拟机需要在很多情况下保存地图绘制的当前状态。
         initMap();
 
 

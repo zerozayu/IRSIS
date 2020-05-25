@@ -6,18 +6,6 @@
             android:icon="@drawable/call"
             android:title="紧急电话"/>
         <item
-            android:id="@+id/nav_2"
-            android:icon="@drawable/setting"
-            android:title="2"/>
-        <item
-            android:id="@+id/nav_3"
-            android:icon="@drawable/setting"
-            android:title="3"/>
-        <item
-            android:id="@+id/nav_4"
-            android:icon="@drawable/setting"
-            android:title="4"/>
-        <item
             android:id="@+id/nav_offline"
             android:icon="@drawable/setting"
             android:title="退出登录"/>

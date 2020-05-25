@@ -4,16 +4,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_registerUser"
-        android:text="新建用户"/>
 
-    <Button
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_deleteUser"
-        android:text="删除用户"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="	#1E90FF">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/adduser"/>
+        <Button
+            android:id="@+id/btn_registerUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="用户新增"
+            android:background="	#1E90FF"
+            android:textSize="24sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="	#98FB98">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/find"/>
+        <Button
+            android:id="@+id/btn_deleteUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="用户查询"
+            android:background="	#98FB98"
+            android:textSize="24sp" />
+    </LinearLayout>
+
 
 </LinearLayout>

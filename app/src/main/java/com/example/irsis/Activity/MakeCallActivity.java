@@ -36,10 +36,30 @@ public class MakeCallActivity extends BaseActivity {
                 }
             }
         });
+        Button button_makeCall1=findViewById(R.id.button_makeCall_1);
+        button_makeCall1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //判断用户是否已经给过授权。两个参数（context，权限名）
+                if (ContextCompat.checkSelfPermission(MakeCallActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MakeCallActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE}, 1);
+                } else {
+                    call1();
+                }
+            }
+        });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void call1() {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:10010"));
+        startActivity(intent);
     }
 
 
-    //打电话方法（！！！！有错误）
     @SuppressLint("MissingPermission")
     private void call() {
             Intent intent = new Intent(Intent.ACTION_CALL);

@@ -34,7 +34,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     Button button_toProblemActivity;
-    Button button_toChatActivity;
     Button button_toLBSActivity;
     Button button_toAdminActivity;
     Button button_toLitePalActivity;
@@ -90,7 +89,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public void findView() {
         button_toProblemActivity = findViewById(R.id.button_toProblemActivity);
-        button_toChatActivity = findViewById(R.id.button_toChatActivity);
         button_toLBSActivity = findViewById(R.id.button_toLBSActivity);
         button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
         button_toLitePalActivity = findViewById(R.id.button_toLitePalActivity);
@@ -99,8 +97,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void setListener(){
         //跳转向问题列表界面
         button_toProblemActivity.setOnClickListener(this);
-        //跳转向聊天界面
-        button_toChatActivity.setOnClickListener(this);
         //跳转向地图界面
         button_toLBSActivity.setOnClickListener(this);
         //跳转向管理员界面
@@ -134,10 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.button_toChatActivity:
-                intent = new Intent(MainActivity.this, ChatActivity.class);
-                startActivity(intent);
-                break;
+
             case R.id.button_toLBSActivity:
                 intent = new Intent(MainActivity.this, LBSActivity.class);
                 startActivity(intent);
