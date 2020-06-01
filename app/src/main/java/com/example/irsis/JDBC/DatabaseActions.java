@@ -133,6 +133,20 @@ public class DatabaseActions {
         }
         return true;
     }
+    //删除问题
+    public boolean DBDeleteProblem(String Pname,String Pcontent){
+        String sql = "delete from problem where Pname = ? and Pcontent = ?";
+        try {
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, Pname);
+            psmt.setString(2, Pcontent);
+            psmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 
     //查询所有用户

@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.example.irsis.Lbs.android_path_record.TrackActivity;
 import com.example.irsis.R;
 import com.example.irsis.myclass.User;
 import com.google.android.material.navigation.NavigationView;
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     Button button_toProblemActivity;
     Button button_toLBSActivity;
     Button button_toAdminActivity;
-    Button button_toLitePalActivity;
+    Button button_toDataActivity;
 
 
     private EditText editText;
@@ -91,7 +92,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         button_toProblemActivity = findViewById(R.id.button_toProblemActivity);
         button_toLBSActivity = findViewById(R.id.button_toLBSActivity);
         button_toAdminActivity = findViewById(R.id.button_toAdminActivity);
-        button_toLitePalActivity = findViewById(R.id.button_toLitePalActivity);
+        button_toDataActivity = findViewById(R.id.button_toDataActivity);
     }
 
     public void setListener(){
@@ -102,7 +103,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //跳转向管理员界面
         button_toAdminActivity.setOnClickListener(this);
         //跳转至数据库
-        button_toLitePalActivity.setOnClickListener(this);
+        button_toDataActivity.setOnClickListener(this);
     }
 
     //重写onClick方法
@@ -132,7 +133,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.button_toLBSActivity:
-                intent = new Intent(MainActivity.this, LBSActivity.class);
+                intent = new Intent(MainActivity.this, TrackActivity.class);
                 startActivity(intent);
                 break;
             case R.id.button_toAdminActivity:
@@ -140,8 +141,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
 
-            case R.id.button_toLitePalActivity:
-                intent = new Intent(MainActivity.this, TrackActivity.class);
+            case R.id.button_toDataActivity:
+                intent = new Intent(MainActivity.this, DataActivity.class);
                 startActivity(intent);
                 break;
 

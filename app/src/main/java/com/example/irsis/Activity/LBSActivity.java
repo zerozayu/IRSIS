@@ -34,16 +34,18 @@ public class LBSActivity extends BaseActivity {
         text_lbs = findViewById(R.id.text_lbs);
         mDrawerLayout = findViewById(R.id.drawer_layout_lbs);
         NavigationView navView = findViewById(R.id.nav_view_lbs);
-        //将打电话设为默认选中
+        //将开始巡检设为默认选中
         navView.setCheckedItem(R.id.nav_startTrack);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
                 switch (item.getItemId()) {
+                    //开始巡检按钮
                     case R.id.nav_startTrack:
 
                         break;
+                    //结束巡检按钮
                     case R.id.nav_finishTrack:
 
                         break;
@@ -74,14 +76,6 @@ public class LBSActivity extends BaseActivity {
         aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
     }
-
-
-
-
-
-
-
-
 
 
     @Override

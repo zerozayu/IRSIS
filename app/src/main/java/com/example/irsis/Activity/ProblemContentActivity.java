@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.example.irsis.JDBC.Action;
 import com.example.irsis.R;
 import com.example.irsis.myclass.Problem;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -26,6 +27,7 @@ public class ProblemContentActivity extends BaseActivity {
     public static final String PROBLEM_IMAGE = "problem_image";
     String problemName=null;
     String problemContent=null;
+    Action action;
 
     //自定义方法传参
     public static void actionStart(Context context, String problemName, String problemContent, byte[] problemImage) {
@@ -65,12 +67,17 @@ public class ProblemContentActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LitePal.deleteAll(Problem.class, "Pname = ? and Pcontent = ?", problemName, problemContent);
+                deletePro();
                 Intent intent = new Intent(ProblemContentActivity.this, ProblemActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+    }
+
+    public void deletePro(){
+        action=new Action();
+        action.deleteProblembyProNameContent(problemName,problemContent);
     }
 
     @Override

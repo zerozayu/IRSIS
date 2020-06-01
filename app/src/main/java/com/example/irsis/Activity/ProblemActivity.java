@@ -138,11 +138,7 @@ public class ProblemActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -151,7 +147,7 @@ public class ProblemActivity extends BaseActivity {
                     }
                 });
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(6000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -162,7 +158,7 @@ public class ProblemActivity extends BaseActivity {
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                         if(problemList.isEmpty()){
-                            Toast.makeText(ProblemActivity.this,"刷新失败，请稍后再试。",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProblemActivity.this,"刷新失败，请稍等。",Toast.LENGTH_SHORT).show();
                         }
                         swipeRefresh.setRefreshing(false);
                     }

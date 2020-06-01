@@ -37,7 +37,20 @@ public class Action {
                 action=new DatabaseActions();
                 boolean a=action.DBInsertProblem(Pname,Pcontent,Pimage);
                 if (a){
-                    System.out.println("插入问题成功");
+                    System.out.println("插入问题成功！");
+                }
+            }
+        }).start();
+    }
+    //删除问题
+    public void deleteProblembyProNameContent(String Pname,String Pcontent){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                action=new DatabaseActions();
+                boolean a=action.DBDeleteProblem(Pname,Pcontent);
+                if(a){
+                    System.out.println("删除问题成功！");
                 }
             }
         }).start();
